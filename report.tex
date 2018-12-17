@@ -7,35 +7,74 @@
 \usepackage{graphicx}
 \usepackage{float}
 \hypersetup{colorlinks=false, allcolors=blue}
+\usepackage{indentfirst}
+% \usepackage{titlesec}
+% \newcommand{\sectionbreak}{\clearpage}
 \newcommand{\noin}{\noindent}                    
                         
 \begin{document}
 
-\title{\vspace{-1.0cm}\textbf{CS 175: Final Project Report}}
+\title{%
+  \textbf{CS 175: Roll-A-Bunny \\
+  \large Final Project Report}}
 \author{Grace Zhang, Yong Li Dich}
-\date{Roll-A-Mole}
+\date{}
 \maketitle
 
 \newpage
 \tableofcontents
 
+% TODO:
+% screenshots
+% references
+
 \newpage
  
-\section{Project Overview}
+\section{Roll-A-Bunny Overview}
+  For our CS 175 project, we decided to create a game called \textbf{Roll-A-Bunny} by building on what we've learned in class, and extending it to create this cross-platform game in Unity.
+\subsection{Goal}
+  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball. The goal of Roll-A-Bunny is to roll your player (a sphere) over all 9 bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
+  You win if you are able to roll over all 9 bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all 9 bunnies within 60 seconds, you will unfortunately lose the game.
 
-\section{Project Components}
+  % TODO - 60 seconds?
+  Throughout these 60 seconds, the bunnies will pop up and down in their respective positions on the 3 by 3 grid and the yellow collectibles will be rotating in place, scattered across the surface. 
+  
+\subsection{Navigation}
+Your player can be controlled via the arrow keys or the WASD keys. 
+There are 4 walls that enclose the 3 by 3 space and your player will be limited to this area. 
+
+\subsection{Scoring / Metrics}
+\begin{itemize}
+  \item Bunnies - each bunny will only appear in its designated cell on the 3 by 3 grid, and upon collision with a bunny, it will disappear and the bunny counter will be incremented by 1. 
+  \item Yellow Collectibles - upon collision with a yellow collectible, the collectible will disappear and your score will be incremented by 1.
+\end{itemize}
+
+
+\section{Project Components and Hierarchy}
+\subsection{Bunnies}
+
+\subsection{Terrain}
+
 \subsection{Walls}
+We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen.
+
 \subsection{Collectibles}
+
+
 \subsubsection{Rotating Collectibles}
+
+
 \subsection{Text}
+
 
 \section{Camera and Lighting}
 \subsection{Camera Following Player}
 
+
 \section{Design}
 \subsection{Collision Detection}
 \subsection{Prefabs}
-
+\subsection{Assets}
 
 
 \end{document}

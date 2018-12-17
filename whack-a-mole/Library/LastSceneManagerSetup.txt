@@ -1,4 +1,0 @@
-sceneSetups:
-- path: Assets/roll-a-mole.unity
-  isLoaded: 1
-  isActive: 1

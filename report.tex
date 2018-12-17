@@ -42,9 +42,11 @@
   Your player can be controlled via the arrow keys or the WASD keys. 
   There are 4 walls that enclose the 3 by 3 space and your player will be limited to this area. 
 
+  Once you reach the end of the game after 60 seconds, the game will be frozen in ``Game Over'' mode. If you would like to play again, you can hit the ``space'' key to restart the game.
+
 \subsection{Scoring / Metrics}
 \begin{itemize}
-  \item Bunnies - each bunny will only appear in its designated cell on the 3 by 3 grid, and upon collision with a bunny, it will disappear and the bunnyiescounter will be incremented by 1. 
+  \item Bunnies - each bunny will only appear in its designated cell on the 3 by 3 grid, and upon collision with a bunny, it will disappear and the bunnies left counter will be decremented by 1. 
   \item Yellow Collectibles - upon collision with a yellow collectible, the collectible will disappear and your score will be incremented by 1.
 \end{itemize}
 
@@ -85,10 +87,15 @@ We created a 3D terrain to increase the difficulty of the game. The 3D terrain h
 We have 4 different texts in our game:
 
 \begin{enumerate}
-  \item Bunny Count Text - we have a floating bunnyiescounter in the upper left hand corner of our game. This number represents the number of bunnies that you have been able to roll over so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, increment our bunnies counter, and update our bunny count text.
+  \item Bunny Count Text - we have a floating bunnies counter in the upper left hand corner of our game. This number represents the number of bunnies out of 9 that you have remaining in the game to roll over. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, decrement our bunnies counter, and update our bunny count text.
   \item Score Text - we have a score displayed in the upper left hand corner of our game. This number represents the number of yellow collectibles that you have been able to collect so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the yellow collectibles (which are tagged as ``Collectibles''). More specifically, when such a trigger collision occurs, we deactivate the yellow collectible, increment our collectibles counter, and update our score text.
   \item Time Remaining Text - we have the time remaining displayed in the upper right hand corner of our game. This number represents the amount of time you have remaining to roll over all 9 bunnies as well as collect as many yellow collectibles you can. The time remaining starts at 60 seconds and is decremented every frame based on the time that has passed. This serves as a count down of how much time you have left before your game is scored.
-  \item Win Text - once you complete the game, the win text will display over your player. The win text will either display ``You Win!'' if you won the game by rolling over all 9 bunnies, or ``You lose :('' if you were unable to roll over all 9 bunnies within the 60 seconds.
+  \item Info Text - at the beginning of the game, the info text will display instructions describing the objective of the game. Once you complete the game after 60 seconds, the info text will display the results of the game. This text will conditionally display the following:
+  \begin{itemize}
+    \item ``You Win - full score!'' if you won the game by rolling over all 9 bunnies and collected all 12 collectibles
+    \item ``You win with X points!'' if you roll over all 9 bunnies but do not collect all 12 collectibles
+    \item ``You lose :('' if you were unable to roll over all 9 bunnies within the allotted 60 seconds
+  \end{itemize}
 \end{enumerate}
 
 

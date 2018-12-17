@@ -54,9 +54,22 @@
 
 \subsection{Bunnies}
 % TODO
+The bunnies were an asset we downloaded from the Unity 3D asset store. In the bunny-spirit of CS 175, we use them to represent moles as part of our inspired whack-a-moles game. The bunny asset included the bunny's graph library/scene graph of the rabbit materials and textures, scene, and  vector animations of the bunny's movement. The bunnies are most likely constructed using similar ideas that were taught in CS 175. They have a mesh over the different bones of the rabbit which are connected as nodes within a scene graph. Then, an animation of the repetitive dancing movement can be made. 
+
+The nine bunnies we have in the game are made to spawn bunnies to pop up at random places in 1.5 second intervals. The pop ups are controlled within the GameController.cs which call a random bunny to pop up by randomly selecting a bunny from an array of bunnies (which we call our moles container).
+
+The bunnies help the user gain points and only if all nine bunnies are hit within the given 60 seconds interval will the user win the game. 
+
+\subsubsection{Random Bunny Appearances (Lerp and Random selection)}
+In order to update the position of the bunnies, we linearly interpolate between their local position to the target position depending on the circumstance. Unity has a Vector3.Lerp(start position, target position, speed) function. Like in class, this means we pass in transform vectors such as the local position of the rabbit (x,y,z) and the target position of the rabbit. The Lerp functionality is essentially how we are moving the bunnies up and down. 
+
+The target position is updated to pop up a particular bunny, for example, B1 when our algorithm indicates that B1 has been selected. A bunny like B1 is selected through random selection of an index of an array of bunny objects. In GameController.cs, we have a moles array of bunnies holding Mole (bunny) class objects, representing our bunny objects. This array is set to our molesContainer's children. 
+
+The bunny B1 will hide or disappear when our timer for disappearance hits 0. After 1.25 seconds, the bunny B1 will disappear. The bunny B1 can also disappear if our player's ball hits the bunny, scoring the player a point. 
+
 
 \subsection{Terrain}
-% TODO
+We created a 3D terrain to increase the difficulty of the game. The 3D terrain has a terrain collider so the (snow) ball would have to move up and down small bumps and hills in order to navigate the game field. Unity has a brush that allows you to raise and lower terrains based on a pattern you select (and there are many to select from). 
 
 \subsection{Walls}
   We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
@@ -119,8 +132,11 @@ We have 4 different texts in our game:
 
 \subsection{Assets}
   We have spruced up our project and have made it look more similar to reality by taking advantage of different Unity assets.
+  
+  We downloaded an animated bunny asset and rotating cube assets as part of our game for users to win points when those assets are hit. We also create many prefabs as our assets to allow for more efficient updates of the same assets. For example, a bunny has its own prefab so when one bunny was updated, all the other bunnies were also updated. 
+ 
+  We stored different scenes to work with for code management purposes. We also stored different materials, textures, and scripts as assets. We had terrain and background assets to help us build a forest environment. 
   % TODO
-
 
 \section{Challenges}
 \subsection{Learning Unity}
@@ -130,7 +146,8 @@ Luckily, we had already learned a lot in CS 175 this semester and were able to i
 
 \subsection{Learning } 
 % TODO
-test
+We learned a lot about C#, object oriented programming, hierarchical ordering of game objects, importance of timers for games, and updates of information (like a score or hits of a collectible/bunny) across classes. Reloading a scene or pausing a scene were interesting parts of the Unity game engine library we had incorporated. Controlling the camera and assigning the point of view of the player were also part of the learning process. 
+Most importantly, organizing our scripts and code for easy editing and team editing were essential to helping us merge different game ideas instead of relying on physical presence of both partners. 
 
 \begin{thebibliography}{999}
 

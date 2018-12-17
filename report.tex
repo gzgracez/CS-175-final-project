@@ -40,8 +40,8 @@
   Throughout these 60 seconds, the bunnies will pop up and down in their respective positions on the 3 by 3 grid and the yellow collectibles will be rotating in place, scattered across the surface. 
   
 \subsection{Navigation}
-Your player can be controlled via the arrow keys or the WASD keys. 
-There are 4 walls that enclose the 3 by 3 space and your player will be limited to this area. 
+  Your player can be controlled via the arrow keys or the WASD keys. 
+  There are 4 walls that enclose the 3 by 3 space and your player will be limited to this area. 
 
 \subsection{Scoring / Metrics}
 \begin{itemize}
@@ -51,21 +51,20 @@ There are 4 walls that enclose the 3 by 3 space and your player will be limited 
 
 
 \section{Project Components and Hierarchy}
-
-We focused on project organization by keeping our project hierarchy as organized as possible: in our hierarchy, we grouped all the bunnies together, all the yellow collectibles together, all the walls together, and all the text together.
+  We focused on project organization by keeping our project hierarchy as organized as possible: in our hierarchy, we grouped all the bunnies together, all the yellow collectibles together, all the walls together, and all the text together.
 
 \subsection{Bunnies}
 
 \subsection{Terrain}
 
 \subsection{Walls}
-We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
+  We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
 
 \subsection{Collectibles}
-The 12 yellow collectibles are yellow cubes that are all based on the same prefab. All cubes are colored yellow to draw attention to themselves as collectibles that will gain the user points. Additionally, each collectible rotates in place around the surface of the play area.
+  The 12 yellow collectibles are yellow cubes that are all based on the same prefab. All cubes are colored yellow to draw attention to themselves as collectibles that will gain the user points. Additionally, each collectible rotates in place around the surface of the play area.
 
 \subsubsection{Rotating Collectibles}
-Each of the collectibles rotate in place. We were able to achieve this rotation effect by rotating the transform of each of our yellow collectibles in the \verb+Update()+ function so that the transform of each of our collectibles is updated in each frame. In our \verb+Update()+ function, we apply a rotation by a certain vector to the transforms of our collectibles, smoothed by a time delta (so that the rotations are frame rate independent and not extremely fast and jerky as they would be without the smoothing).
+  Each of the collectibles rotate in place. We were able to achieve this rotation effect by rotating the transform of each of our yellow collectibles in the \verb+Update()+ function so that the transform of each of our collectibles is updated in each frame. In our \verb+Update()+ function, we apply a rotation by a certain vector to the transforms of our collectibles, smoothed by a time delta (so that the rotations are frame rate independent and not extremely fast and jerky as they would be without the smoothing).
 
 \subsection{Text}
 
@@ -81,9 +80,22 @@ We have 4 different texts in our game:
 
 
 
-\section{Camera and Lighting}
-\subsection{Camera Following Player}
+\section{Camera Positioning}
+  We wanted the user to be able to focus on his/her player's actions and achieved this by updating our camera's position so that it is always following the player's position. 
 
+  We first attempted to update the camera position to be relative to the player's position by making the camera a child of the player, which unfortunately led to a very roll-heavy perspective of our scene because the player's sphere is rotating rapidly to move around and so the camera's point of view rotates with it. Thus, we took an alternative approach to capture the effect of our camera following our player: 
+
+\subsection{Camera Following Player}
+  We were able to capture the effect of our camera following our player by keeping our camera and player as two separate game objects with no hierarchical relationship between them.
+  We realized that what we wanted to achieve was to make the camera's position, relative to the player's position, remain constant. 
+
+  Thus, we introduced the idea of having an offset value.
+  We first placed the camera in a position that is able to capture our player and its surrounding space as desired. 
+  Then, in our camera's \verb+Start()+ function, we compute an offset that is the initial difference between the camera's position and the player's position. 
+  Our goal is to have the camera and player have this same offset at every frame throughout the duration of the game, so we update the camera's transform at every frame in the function \verb+LateUpdate()+ so that it is located at the player's position plus the offset. 
+  Updating the camera's transform in \verb+LateUpdate()+ rather than \verb+Update()+ allows us to ensure that we will update our camera's position only after all items have been processed in \verb+Update+, more specifically ensuring that the position of the camera is updated only after the player's position has been updated in that particular frame.
+  This process allows the camera to maintain the same relative position to our player throughout the game, achieving the effect of having our camera follow our player, allowing the user to focus on his/her player's behavior.
+  
 
 \section{Design}
 \subsection{Collision Detection}

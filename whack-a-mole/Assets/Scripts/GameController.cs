@@ -5,16 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+
     public GameObject moleContainer;
-    public TextMesh infoText;
     public float spawnDuration = 1.5f;
     public float spawnDecrement = 0.1f; 
     public float minimumSpawnDuration = 0.5f;
-    public float gameTimer = 60f; 
 
     private Mole[] moles;
     private float spawnTimer = 0f;
-    private float resetTimer = 3f; 
     // Start is called before the first frame update
     void Start()
     {
@@ -38,25 +36,6 @@ public class GameController : MonoBehaviour
             }
 
             spawnTimer = spawnDuration; 
-        }
-
-        gameTimer -= Time.deltaTime; 
-        if (gameTimer > 0f)
-        {
-            infoText.text = "Hit all the bunnies! \n Time: " + Mathf.Floor(gameTimer);
-
-              //+ "\n Score: " + player.score; 
-        }
-        else
-        {
-            infoText.text = "Game over!";
-            //infoText.text = "Game over! Your score: " + Mathf.Floor(player.score);
-
-            //resetTimer -= Time.deltaTime; 
-            //if (resetTimer <= 0f)
-            //{
-            //    SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
-            //}
         }
     }
 }

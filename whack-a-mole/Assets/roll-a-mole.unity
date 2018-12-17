@@ -467,11 +467,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moleContainer: {fileID: 1028639885}
-  infoText: {fileID: 0}
   spawnDuration: 1.5
   spawnDecrement: 0.1
   minimumSpawnDuration: 0.5
-  gameTimer: 60
 --- !u!4 &158167389
 Transform:
   m_ObjectHideFlags: 0
@@ -1173,7 +1171,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 10, y: -40}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 400, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &802623509
 MonoBehaviour:

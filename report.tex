@@ -33,8 +33,8 @@
 \section{Roll-A-Bunny Overview}
   For our CS 175 project, we decided to create a game called \textbf{Roll-A-Bunny} by building on what we've learned in class, and extending it to create this cross-platform game in Unity.
 \subsection{Goal}
-  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all 9 bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
-  You win if you are able to roll over all 9 bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all 9 bunnies within 60 seconds, you will unfortunately lose the game.
+  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all nine bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
+  You win if you are able to roll over all nine bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all nine bunnies within 60 seconds, you will unfortunately lose the game.
 
   Throughout these 60 seconds, the bunnies will pop up and down in their respective positions on the 3 by 3 grid and the yellow collectibles will be rotating in place, scattered across the surface. 
   
@@ -55,23 +55,20 @@
   We focused on project organization by keeping our project hierarchy as organized as possible: in our hierarchy, we grouped all the bunnies together, all the yellow collectibles together, all the walls together, and all the text together.
 
 \subsection{Bunnies}
-% TODO
-The bunnies were an asset we downloaded from the Unity 3D asset store. In the bunny-spirit of CS 175, we use them to represent moles as part of our inspired whack-a-moles game. The bunny asset included the bunny's graph library/scene graph of the rabbit materials and textures, scene, and  vector animations of the bunny's movement. The bunnies are most likely constructed using similar ideas that were taught in CS 175. They have a mesh over the different bones of the rabbit which are connected as nodes within a scene graph. Then, an animation of the repetitive dancing movement can be made. 
+  The bunnies were an asset we downloaded from the Unity 3D asset store. In the bunny-spirit of CS 175, we use them to represent moles as part of our inspired whack-a-mole game. The bunny asset included the bunny's graph library/scene graph of the rabbit materials and textures, scene, and  vector animations of the bunny's movement. The bunnies are constructed using similar ideas that were covered in CS 175. They have a mesh over the different bones of the rabbit, which are connected as nodes within a scene graph. Then, an animation of the repetitive dancing movement can be made. 
 
-The nine bunnies we have in the game are made to spawn bunnies to pop up at random places in 1.5 second intervals. The pop ups are controlled within the GameController.cs which call a random bunny to pop up by randomly selecting a bunny from an array of bunnies (which we call our moles container).
-
-The bunnies help the user gain points and only if all nine bunnies are hit within the given 60 seconds interval will the user win the game. 
+  The nine bunnies we have in the game are randomly chosen to pop up in their designated cells in 1.5 second intervals. These random bunny appearances are controlled within \verb+GameController.cs+, where we select a bunny to appear by randomly selecting a bunny from our array of bunnies. In \verb+GameController.cs+, we have an array of bunnies holding bunny game objects.
 
 \subsubsection{Random Bunny Appearances (Lerp and Random selection)}
-In order to update the position of the bunnies, we linearly interpolate between their local position to the target position depending on the circumstance. Unity has a Vector3.Lerp(start position, target position, speed) function. Like in class, this means we pass in transform vectors such as the local position of the rabbit (x,y,z) and the target position of the rabbit. The Lerp functionality is essentially how we are moving the bunnies up and down. 
+  In each random appearance of a bunny, in order to update the position of the bunny, we linearly interpolate between its local position and its target position depending on the circumstance. Unity has a \verb+Vector3.Lerp(start position, target position, speed)+ function that allows us to accomplish this more easily and efficiently. Similar to the lerp function we introduced in class, this means we pass in transform vectors such as the local position of the rabbit and the target position of the rabbit. This lerp functionality allows us to smoothly move the bunnies up and down. 
 
-The target position is updated to pop up a particular bunny, for example, B1 when our algorithm indicates that B1 has been selected. A bunny like B1 is selected through random selection of an index of an array of bunny objects. In GameController.cs, we have a moles array of bunnies holding Mole (bunny) class objects, representing our bunny objects. This array is set to our molesContainer's children. 
+  The target position is updated when we randomly select the next bunny to appear. For example, we may choose to select bunny B1, when our algorithm indicates that B1 has been randomly selected. B1 would have been selected by randomly generating a number in the range of the length of our bunnies array, which contains all of our bunny game objects. 
 
-The bunny B1 will hide or disappear when our timer for disappearance hits 0. After 1.25 seconds, the bunny B1 will disappear. The bunny B1 can also disappear if our player's ball hits the bunny, scoring the player a point. 
+  We also have a timer set for how long each bunny will appear on the screen. This timer is initially set to 1.25 seconds, and after 1.25 seconds, the bunny B1 will hide or disappear since this timer will have run out. The bunny B1 could also disappear before this timer runs out if our player rolls over the bunny, decrementing the number of bunnies the user has left to roll over.
 
 
 \subsection{Terrain}
-We created a 3D terrain to increase the difficulty of the game. The 3D terrain has a terrain collider so the (snow) ball would have to move up and down small bumps and hills in order to navigate the game field. Unity has a brush that allows you to raise and lower terrains based on a pattern you select (and there are many to select from). 
+  We created a 3D terrain to increase the difficulty of the game and more closely simulate reality. The 3D terrain has a terrain collider so the player would have to move up and down small bumps and hills in order to navigate the game field. We were able to accomplish this by using the terrain game object and its brush to raise and lower terrains in a natural fashion.
 
 \subsection{Walls}
   We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
@@ -87,14 +84,14 @@ We created a 3D terrain to increase the difficulty of the game. The 3D terrain h
 We have 4 different texts in our game:
 
 \begin{enumerate}
-  \item Bunny Count Text - we have a floating bunnies counter in the upper left hand corner of our game. This number represents the number of bunnies out of 9 that you have remaining in the game to roll over. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, decrement our bunnies counter, and update our bunny count text.
+  \item Bunny Count Text - we have a floating bunnies counter in the upper left hand corner of our game. This number represents the number of bunnies out of nine that you have remaining in the game to roll over. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, decrement our bunnies counter, and update our bunny count text.
   \item Score Text - we have a score displayed in the upper left hand corner of our game. This number represents the number of yellow collectibles that you have been able to collect so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the yellow collectibles (which are tagged as ``Collectibles''). More specifically, when such a trigger collision occurs, we deactivate the yellow collectible, increment our collectibles counter, and update our score text.
-  \item Time Remaining Text - we have the time remaining displayed in the upper right hand corner of our game. This number represents the amount of time you have remaining to roll over all 9 bunnies as well as collect as many yellow collectibles you can. The time remaining starts at 60 seconds and is decremented every frame based on the time that has passed. This serves as a count down of how much time you have left before your game is scored.
+  \item Time Remaining Text - we have the time remaining displayed in the upper right hand corner of our game. This number represents the amount of time you have remaining to roll over all nine bunnies as well as collect as many yellow collectibles you can. The time remaining starts at 60 seconds and is decremented every frame based on the time that has passed. This serves as a count down of how much time you have left before your game is scored.
   \item Info Text - at the beginning of the game, the info text will display instructions describing the objective of the game. Once you complete the game after 60 seconds, the info text will display the results of the game. This text will conditionally display the following:
   \begin{itemize}
-    \item ``You Win - full score!'' if you won the game by rolling over all 9 bunnies and collected all 12 collectibles
-    \item ``You win with X points!'' if you roll over all 9 bunnies but do not collect all 12 collectibles
-    \item ``You lose :('' if you were unable to roll over all 9 bunnies within the allotted 60 seconds
+    \item ``You Win - full score!'' if you won the game by rolling over all nine bunnies and collected all 12 collectibles
+    \item ``You win with X points!'' if you roll over all nine bunnies but do not collect all 12 collectibles
+    \item ``You lose :('' if you were unable to roll over all nine bunnies within the allotted 60 seconds
   \end{itemize}
 \end{enumerate}
 
@@ -134,7 +131,7 @@ We have 4 different texts in our game:
   We have used prefabs to make our codebase more well-structured and maintainable.
   In particular, prefabs allow us to create GameObjects with specific components, property values, and child GameObjects as a reusable Asset. This allows us to avoid duplication of code and instead create instances of the same GameObject when needed in the game. 
 
-  In particular, we took advantage of prefabs in our implementation of our bunnies and yellow collectibles. We have a bunny prefab and a collectible prefab, which we were able to utilize to create instances of our 9 bunnies and 12 yellow collectibles. This allows us to have more easily maintainable code as we can now make changes to all of our bunnies or collectibles at once, rather than having to update each bunny or collectible individually.
+  In particular, we took advantage of prefabs in our implementation of our bunnies and yellow collectibles. We have a bunny prefab and a collectible prefab, which we were able to utilize to create instances of our nine bunnies and 12 yellow collectibles. This allows us to have more easily maintainable code as we can now make changes to all of our bunnies or collectibles at once, rather than having to update each bunny or collectible individually.
 
 
 \subsection{Assets}
@@ -153,7 +150,7 @@ Luckily, we had already learned a lot in CS 175 this semester and were able to i
 
 \subsection{Learning } 
 % TODO
-We learned a lot about C#, object oriented programming, hierarchical ordering of game objects, importance of timers for games, and updates of information (like a score or hits of a collectible/bunny) across classes. Reloading a scene or pausing a scene were interesting parts of the Unity game engine library we had incorporated. Controlling the camera and assigning the point of view of the player were also part of the learning process. 
+We learned a lot about C\#, object oriented programming, hierarchical ordering of game objects, importance of timers for games, and updates of information (like a score or hits of a collectible/bunny) across classes. Reloading a scene or pausing a scene were interesting parts of the Unity game engine library we had incorporated. Controlling the camera and assigning the point of view of the player were also part of the learning process. 
 Most importantly, organizing our scripts and code for easy editing and team editing were essential to helping us merge different game ideas instead of relying on physical presence of both partners. 
 
 \begin{thebibliography}{999}

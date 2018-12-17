@@ -8,8 +8,8 @@
 \usepackage{float}
 \hypersetup{colorlinks=false, allcolors=blue}
 \usepackage{indentfirst}
-% \usepackage{titlesec}
-% \newcommand{\sectionbreak}{\clearpage}
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
 \newcommand{\noin}{\noindent}                    
                         
 \begin{document}
@@ -33,7 +33,7 @@
 \section{Roll-A-Bunny Overview}
   For our CS 175 project, we decided to create a game called \textbf{Roll-A-Bunny} by building on what we've learned in class, and extending it to create this cross-platform game in Unity.
 \subsection{Goal}
-  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball. The goal of Roll-A-Bunny is to roll your player (a sphere) over all 9 bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
+  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all 9 bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
   You win if you are able to roll over all 9 bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all 9 bunnies within 60 seconds, you will unfortunately lose the game.
 
   % TODO - 60 seconds?
@@ -51,20 +51,34 @@ There are 4 walls that enclose the 3 by 3 space and your player will be limited 
 
 
 \section{Project Components and Hierarchy}
+
+We focused on project organization by keeping our project hierarchy as organized as possible: in our hierarchy, we grouped all the bunnies together, all the yellow collectibles together, all the walls together, and all the text together.
+
 \subsection{Bunnies}
 
 \subsection{Terrain}
 
 \subsection{Walls}
-We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen.
+We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
 
 \subsection{Collectibles}
-
+The 12 yellow collectibles are yellow cubes that are all based on the same prefab. All cubes are colored yellow to draw attention to themselves as collectibles that will gain the user points. Additionally, each collectible rotates in place around the surface of the play area.
 
 \subsubsection{Rotating Collectibles}
-
+Each of the collectibles rotate in place. We were able to achieve this rotation effect by rotating the transform of each of our yellow collectibles in the \verb+Update()+ function so that the transform of each of our collectibles is updated in each frame. In our \verb+Update()+ function, we apply a rotation by a certain vector to the transforms of our collectibles, smoothed by a time delta (so that the rotations are frame rate independent and not extremely fast and jerky as they would be without the smoothing).
 
 \subsection{Text}
+
+We have 4 different texts in our game:
+
+\begin{enumerate}
+  \item Bunny Count Text - we have a floating bunny counter in the upper left hand corner of our game. This number represents the number of bunnies that you have been able to roll over so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, increment our bunny counter, and update our bunny count text.
+  \item Score Text - we have a score displayed in the upper left hand corner of our game. This number represents the number of yellow collectibles that you have been able to collect so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the yellow collectibles (which are tagged as ``Collectibles''). More specifically, when such a trigger collision occurs, we deactivate the yellow collectible, increment our collectibles counter, and update our score text.
+  \item Time Remaining Text - we have the time remaining displayed in the upper right hand corner of our game. This number represents the amount of time you have remaining to roll over all 9 bunnies as well as collect as many yellow collectibles you can. The time remaining starts at 60 seconds and is decremented every frame based on the time that has passed. This serves as a count down of how much time you have left before your game is scored.
+  \item Win Text - once you complete the game, the win text will display over your player. The win text will either display ``You Win!'' if you won the game by rolling over all 9 bunnies, or ``You lose :('' if you were unable to roll over all 9 bunnies within the 60 seconds.
+\end{enumerate}
+
+
 
 
 \section{Camera and Lighting}
@@ -75,6 +89,32 @@ We created 4 identical walls to enclose the bunnies and our player, so that the 
 \subsection{Collision Detection}
 \subsection{Prefabs}
 \subsection{Assets}
+
+
+\section{Challenges}
+\subsection{Learning Unity}
+We were both new to Unity and have never coded in C\# before. As such, there was a steep learning curve for us, as we had to familiarize ourselves with the new programming language, framework, and terminology. We did so by completing many different online tutorials: \cite{tutorial1}, \cite{tutorial-rab}, \cite{tutorial-wam}.
+
+Luckily, we had already learned a lot in CS 175 this semester and were able to identify similar ideas in Unity as those that we learned and implemented in the course. We realized that Unity provides many great wrappers
+
+\subsection{Learning }
+test
+
+\begin{thebibliography}{999}
+
+  \bibitem{tutorial1}
+    Unity Interactive Tutorials, \\
+    \url{https://unity3d.com/learn/tutorials/s/interactive-tutorials}
+
+  \bibitem{tutorial-rab}
+    Roll-A-Ball Tutorial, \\
+    \url{https://unity3d.com/learn/tutorials/s/roll-ball-tutorial}
+
+  \bibitem{tutorial-wam} 
+    Whack-A-Mole Tutorial,\\
+    \url{https://www.youtube.com/watch?v=m4M7VAn-bYk&t=736s}
+
+  \end{thebibliography}
 
 
 \end{document}

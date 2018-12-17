@@ -36,7 +36,6 @@
   Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all 9 bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
   You win if you are able to roll over all 9 bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all 9 bunnies within 60 seconds, you will unfortunately lose the game.
 
-  % TODO - 60 seconds?
   Throughout these 60 seconds, the bunnies will pop up and down in their respective positions on the 3 by 3 grid and the yellow collectibles will be rotating in place, scattered across the surface. 
   
 \subsection{Navigation}
@@ -45,7 +44,7 @@
 
 \subsection{Scoring / Metrics}
 \begin{itemize}
-  \item Bunnies - each bunny will only appear in its designated cell on the 3 by 3 grid, and upon collision with a bunny, it will disappear and the bunny counter will be incremented by 1. 
+  \item Bunnies - each bunny will only appear in its designated cell on the 3 by 3 grid, and upon collision with a bunny, it will disappear and the bunnyiescounter will be incremented by 1. 
   \item Yellow Collectibles - upon collision with a yellow collectible, the collectible will disappear and your score will be incremented by 1.
 \end{itemize}
 
@@ -54,8 +53,10 @@
   We focused on project organization by keeping our project hierarchy as organized as possible: in our hierarchy, we grouped all the bunnies together, all the yellow collectibles together, all the walls together, and all the text together.
 
 \subsection{Bunnies}
+% TODO
 
 \subsection{Terrain}
+% TODO
 
 \subsection{Walls}
   We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
@@ -71,7 +72,7 @@
 We have 4 different texts in our game:
 
 \begin{enumerate}
-  \item Bunny Count Text - we have a floating bunny counter in the upper left hand corner of our game. This number represents the number of bunnies that you have been able to roll over so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, increment our bunny counter, and update our bunny count text.
+  \item Bunny Count Text - we have a floating bunnyiescounter in the upper left hand corner of our game. This number represents the number of bunnies that you have been able to roll over so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the bunnies (which are tagged as ``Bunny''). More specifically, when such a trigger collision occurs, we deactivate the bunny, increment our bunnies counter, and update our bunny count text.
   \item Score Text - we have a score displayed in the upper left hand corner of our game. This number represents the number of yellow collectibles that you have been able to collect so far in the game. This text is automatically updated every time there is a trigger collision between the player (the sphere) and any of the yellow collectibles (which are tagged as ``Collectibles''). More specifically, when such a trigger collision occurs, we deactivate the yellow collectible, increment our collectibles counter, and update our score text.
   \item Time Remaining Text - we have the time remaining displayed in the upper right hand corner of our game. This number represents the amount of time you have remaining to roll over all 9 bunnies as well as collect as many yellow collectibles you can. The time remaining starts at 60 seconds and is decremented every frame based on the time that has passed. This serves as a count down of how much time you have left before your game is scored.
   \item Win Text - once you complete the game, the win text will display over your player. The win text will either display ``You Win!'' if you won the game by rolling over all 9 bunnies, or ``You lose :('' if you were unable to roll over all 9 bunnies within the 60 seconds.
@@ -98,32 +99,55 @@ We have 4 different texts in our game:
   
 
 \section{Design}
+  We focused on our project's overall design so that our game runs efficiently and our codebase is maintainable.
+
 \subsection{Collision Detection}
+  We use trigger collision detection to update our bunnies counter and collectibles counter upon player collision with a bunny and yellow collectible respectively.
+  In particular, we had originally set up our bunnies and yellow collectibles without rigid body components, so they were considered to be static. This meant that Unity would recalculate our static collider cache every frame. 
+
+  In order to increase the efficiency of our game, we added rigid body components to all of our bunnies and yellow collectibles to update them to be dynamic colliders, eliminating the need to recalculate the static collider cache every frame. Additionally, we updated them to be kinematic rigid bodies so that they will not react to physics forces and instead can be animated and moved by its transform (otherwise, gravity would pull them down and through the ground since they are triggers). 
+  In this way, we have efficient collision detection and are able to update our bunnies counter and collectibles counter upon the appropriate types of collisions. 
+
+  To elaborate on our collision detection process, we also use the tag system to detect which objects our player is colliding with at each collision. We do this by introducing different tags for our bunny and collectibles prefabs. We then use the built-in function \verb+CompareTag()+ to efficiently compare the tag of any game object to the string value of our tag of choice. 
+
 \subsection{Prefabs}
+  We have used prefabs to make our codebase more well-structured and maintainable.
+  In particular, prefabs allow us to create GameObjects with specific components, property values, and child GameObjects as a reusable Asset. This allows us to avoid duplication of code and instead create instances of the same GameObject when needed in the game. 
+
+  In particular, we took advantage of prefabs in our implementation of our bunnies and yellow collectibles. We have a bunny prefab and a collectible prefab, which we were able to utilize to create instances of our 9 bunnies and 12 yellow collectibles. This allows us to have more easily maintainable code as we can now make changes to all of our bunnies or collectibles at once, rather than having to update each bunny or collectible individually.
+
+
 \subsection{Assets}
+  We have spruced up our project and have made it look more similar to reality by taking advantage of different Unity assets.
+  % TODO
 
 
 \section{Challenges}
 \subsection{Learning Unity}
-We were both new to Unity and have never coded in C\# before. As such, there was a steep learning curve for us, as we had to familiarize ourselves with the new programming language, framework, and terminology. We did so by completing many different online tutorials: \cite{tutorial1}, \cite{tutorial-rab}, \cite{tutorial-wam}.
+We were both new to Unity and have never coded in C\# before. As such, there was a steep learning curve for us, as we had to familiarize ourselves with the new programming language, framework, and terminology. We did so by completing many different online tutorials: \cite{tutorial-rab}, \cite{tutorial1}, \cite{tutorial-wam}.
 
 Luckily, we had already learned a lot in CS 175 this semester and were able to identify similar ideas in Unity as those that we learned and implemented in the course. We realized that Unity provides many great wrappers
 
-\subsection{Learning }
+\subsection{Learning } 
+% TODO
 test
 
 \begin{thebibliography}{999}
-
-  \bibitem{tutorial1}
-    Unity Interactive Tutorials, \\
-    \url{https://unity3d.com/learn/tutorials/s/interactive-tutorials}
 
   \bibitem{tutorial-rab}
     Roll-A-Ball Tutorial, \\
     \url{https://unity3d.com/learn/tutorials/s/roll-ball-tutorial}
 
+  \bibitem{tutorial1}
+    Unity Interactive Tutorials, \\
+    \url{https://unity3d.com/learn/tutorials/s/interactive-tutorials}
+
+  \bibitem{documentation}
+    Unity Scripting Reference, \\
+    \url{https://docs.unity3d.com/ScriptReference/}
+
   \bibitem{tutorial-wam} 
-    Whack-A-Mole Tutorial,\\
+    Whack-A-Mole Tutorial, \\
     \url{https://www.youtube.com/watch?v=m4M7VAn-bYk&t=736s}
 
   \end{thebibliography}

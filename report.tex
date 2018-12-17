@@ -11,6 +11,13 @@
 \usepackage{titlesec}
 \newcommand{\sectionbreak}{\clearpage}
 \newcommand{\noin}{\noindent}                    
+\newcommand{\fig}[3]{\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=\columnwidth]{figures/#1}
+\caption{#2}
+\label{#1}
+\end{center}
+\end{figure}}
                         
 \begin{document}
 
@@ -27,6 +34,7 @@
 % TODO:
 % screenshots
 % references
+\fig{screenshotpic}{Roll-A-Bunny in action: white ball utilized by player to navigate a bumpy terrain to hit a dancing bunny or golden collectible for points. We made the borders transparent for better user play and to protect the ball from falling out of bounds. The score and count of remaining bunnies are upper left. The instructions are middle top. The remaining time (start with 60 seconds) is at the upper right. }
 
 \newpage
  

@@ -7,11 +7,10 @@ public class GameController : MonoBehaviour
 {
     public GameObject moleContainer;
     public TextMesh infoText;
-    public Player player; 
     public float spawnDuration = 1.5f;
     public float spawnDecrement = 0.1f; 
     public float minimumSpawnDuration = 0.5f;
-    public float gameTimer = 30f; 
+    public float gameTimer = 60f; 
 
     private Mole[] moles;
     private float spawnTimer = 0f;
@@ -33,7 +32,7 @@ public class GameController : MonoBehaviour
             moles[random_mol].Rise();
 
             spawnDuration -= spawnDecrement; 
-            if(spawnDuration < minimumSpawnDuration)
+            if (spawnDuration < minimumSpawnDuration)
             {
                 spawnDuration = minimumSpawnDuration; 
             }
@@ -42,19 +41,22 @@ public class GameController : MonoBehaviour
         }
 
         gameTimer -= Time.deltaTime; 
-        if(gameTimer > 0f)
+        if (gameTimer > 0f)
         {
-            infoText.text = "Hit all the bunnies! \n Time: " + Mathf.Floor(gameTimer) + "\n Score: " + player.score; 
-        } else
-        {
-            infoText.text = "Game over! Your score: " + Mathf.Floor(player.score);
+            infoText.text = "Hit all the bunnies! \n Time: " + Mathf.Floor(gameTimer);
 
-            resetTimer -= Time.deltaTime; 
-            if(resetTimer <= 0f)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
-            }
+              //+ "\n Score: " + player.score; 
         }
-        
+        else
+        {
+            infoText.text = "Game over!";
+            //infoText.text = "Game over! Your score: " + Mathf.Floor(player.score);
+
+            //resetTimer -= Time.deltaTime; 
+            //if (resetTimer <= 0f)
+            //{
+            //    SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+            //}
+        }
     }
 }

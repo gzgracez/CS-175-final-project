@@ -11,11 +11,13 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private int count;
+    private int bunnyCount;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
+        bunnyCount = 9;
         SetCountText();
         winText.text = "";
     }
@@ -31,17 +33,24 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pick Up"))
+        if (other.gameObject.CompareTag("Collectibles"))
         {
             other.gameObject.SetActive(false);
             count += 1;
+            SetCountText();
+        }
+        if (other.gameObject.CompareTag("Bunny"))
+        {
+            Debug.Log("BUNNY COLLISION");
+            other.gameObject.SetActive(false);
+            bunnyCount += 1;
             SetCountText();
         }
     }
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString();
+        countText.text = "Score: " + count.ToString() + "Bunnies Left:"; // + bunnyCount.ToString();
         if (count >= 12)
         {
             winText.text = "You Win!";

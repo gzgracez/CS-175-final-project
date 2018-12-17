@@ -33,7 +33,7 @@
 \section{Roll-A-Bunny Overview}
   For our CS 175 project, we decided to create a game called \textbf{Roll-A-Bunny} by building on what we've learned in class, and extending it to create this cross-platform game in Unity.
 \subsection{Goal}
-  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all nine bunnies while collecting as many yellow collectibles (12 in total) as possible in under 60 seconds. 
+  Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all nine bunnies while collecting as many yellow collectibles (twelve in total) as possible in under 60 seconds. 
   You win if you are able to roll over all nine bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all nine bunnies within 60 seconds, you will unfortunately lose the game.
 
   Throughout these 60 seconds, the bunnies will pop up and down in their respective positions on the 3 by 3 grid and the yellow collectibles will be rotating in place, scattered across the surface. 
@@ -59,7 +59,7 @@
 
   The nine bunnies we have in the game are randomly chosen to pop up in their designated cells in 1.5 second intervals. These random bunny appearances are controlled within \verb+GameController.cs+, where we select a bunny to appear by randomly selecting a bunny from our array of bunnies. In \verb+GameController.cs+, we have an array of bunnies holding bunny game objects.
 
-\subsubsection{Random Bunny Appearances (Lerp and Random selection)}
+\subsubsection{Random Bunny Appearances}
   In each random appearance of a bunny, in order to update the position of the bunny, we linearly interpolate between its local position and its target position depending on the circumstance. Unity has a \verb+Vector3.Lerp(start position, target position, speed)+ function that allows us to accomplish this more easily and efficiently. Similar to the lerp function we introduced in class, this means we pass in transform vectors such as the local position of the rabbit and the target position of the rabbit. This lerp functionality allows us to smoothly move the bunnies up and down. 
 
   The target position is updated when we randomly select the next bunny to appear. For example, we may choose to select bunny B1, when our algorithm indicates that B1 has been randomly selected. B1 would have been selected by randomly generating a number in the range of the length of our bunnies array, which contains all of our bunny game objects. 
@@ -74,7 +74,7 @@
   We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
 
 \subsection{Collectibles}
-  The 12 yellow collectibles are yellow cubes that are all based on the same prefab. All cubes are colored yellow to draw attention to themselves as collectibles that will gain the user points. Additionally, each collectible rotates in place around the surface of the play area.
+  The twelve yellow collectibles are yellow cubes that are all based on the same prefab. All cubes are colored yellow to draw attention to themselves as collectibles that will gain the user points. Additionally, each collectible rotates in place around the surface of the play area.
 
 \subsubsection{Rotating Collectibles}
   Each of the collectibles rotate in place. We were able to achieve this rotation effect by rotating the transform of each of our yellow collectibles in the \verb+Update()+ function so that the transform of each of our collectibles is updated in each frame. In our \verb+Update()+ function, we apply a rotation by a certain vector to the transforms of our collectibles, smoothed by a time delta (so that the rotations are frame rate independent and not extremely fast and jerky as they would be without the smoothing).
@@ -89,8 +89,8 @@ We have 4 different texts in our game:
   \item Time Remaining Text - we have the time remaining displayed in the upper right hand corner of our game. This number represents the amount of time you have remaining to roll over all nine bunnies as well as collect as many yellow collectibles you can. The time remaining starts at 60 seconds and is decremented every frame based on the time that has passed. This serves as a count down of how much time you have left before your game is scored.
   \item Info Text - at the beginning of the game, the info text will display instructions describing the objective of the game. Once you complete the game after 60 seconds, the info text will display the results of the game. This text will conditionally display the following:
   \begin{itemize}
-    \item ``You Win - full score!'' if you won the game by rolling over all nine bunnies and collected all 12 collectibles
-    \item ``You win with X points!'' if you roll over all nine bunnies but do not collect all 12 collectibles
+    \item ``You Win - full score!'' if you won the game by rolling over all nine bunnies and collected all twelve collectibles
+    \item ``You win with X points!'' if you roll over all nine bunnies but do not collect all twelve collectibles
     \item ``You lose :('' if you were unable to roll over all nine bunnies within the allotted 60 seconds
   \end{itemize}
 \end{enumerate}
@@ -131,27 +131,34 @@ We have 4 different texts in our game:
   We have used prefabs to make our codebase more well-structured and maintainable.
   In particular, prefabs allow us to create GameObjects with specific components, property values, and child GameObjects as a reusable Asset. This allows us to avoid duplication of code and instead create instances of the same GameObject when needed in the game. 
 
-  In particular, we took advantage of prefabs in our implementation of our bunnies and yellow collectibles. We have a bunny prefab and a collectible prefab, which we were able to utilize to create instances of our nine bunnies and 12 yellow collectibles. This allows us to have more easily maintainable code as we can now make changes to all of our bunnies or collectibles at once, rather than having to update each bunny or collectible individually.
+  In particular, we took advantage of prefabs in our implementation of our bunnies and yellow collectibles. We have a bunny prefab and a collectible prefab, which we were able to utilize to create instances of our nine bunnies and twelve yellow collectibles. This allows us to have more easily maintainable code as we can now make changes to all of our bunnies or collectibles at once, rather than having to update each bunny or collectible individually.
 
 
 \subsection{Assets}
   We have spruced up our project and have made it look more similar to reality by taking advantage of different Unity assets.
   
-  We downloaded an animated bunny asset and rotating cube assets as part of our game for users to win points when those assets are hit. We also create many prefabs as our assets to allow for more efficient updates of the same assets. For example, a bunny has its own prefab so when one bunny was updated, all the other bunnies were also updated. 
+  We downloaded an animated bunny asset as part of our game for users to try to roll over all nine of our bunnies. We also create prefabs using our assets to allow for more efficient updates of the same game objects. For example, a bunny has its own prefab so when one bunny is updated, all the other bunnies are also updated. 
  
-  We stored different scenes to work with for code management purposes. We also stored different materials, textures, and scripts as assets. We had terrain and background assets to help us build a forest environment. 
-  % TODO
+  Throughout the game creation process, we stored different scenes to work with for code management purposes. We also use terrain and background assets to help us build and simulate a forest environment. 
+
 
 \section{Challenges}
-\subsection{Learning Unity}
 We were both new to Unity and have never coded in C\# before. As such, there was a steep learning curve for us, as we had to familiarize ourselves with the new programming language, framework, and terminology. We did so by completing many different online tutorials: \cite{tutorial-rab}, \cite{tutorial1}, \cite{tutorial-wam}.
 
-Luckily, we had already learned a lot in CS 175 this semester and were able to identify similar ideas in Unity as those that we learned and implemented in the course. We realized that Unity provides many great wrappers
+We learned a lot about C\#, object oriented programming, hierarchical ordering of game objects, timers in games, and state-tracking (for example, via our bunnies counter and collectibles counter). We also learned to reload a scene and freeze a scene, which are interesting parts of the Unity game engine library that we have incorporated. Controlling the camera and assigning the point of view of the player were also important considerations of this project, and we spent quite some time discussing the benefits and drawbacks of various implementations.
 
-\subsection{Learning } 
-% TODO
-We learned a lot about C\#, object oriented programming, hierarchical ordering of game objects, importance of timers for games, and updates of information (like a score or hits of a collectible/bunny) across classes. Reloading a scene or pausing a scene were interesting parts of the Unity game engine library we had incorporated. Controlling the camera and assigning the point of view of the player were also part of the learning process. 
-Most importantly, organizing our scripts and code for easy editing and team editing were essential to helping us merge different game ideas instead of relying on physical presence of both partners. 
+Luckily, we had already learned a lot in CS 175 this semester and were able to identify similar ideas in Unity as those that we learned and implemented in the course. We realized that Unity provides many great wrappers that accomplish tasks similar to those we achieved in our problem sets - it was very rewarding to utilize these built-in functions while having a good sense of what is going on under the hood.
+
+
+\section{Further Work}
+While we are very excited with how our game turned out, we definitely also have ideas on how we can improve our game in the future. In particular, we would like to further take advantage of the various Unity assets that ware available to create more than just bunnies; instead, we could potentially roll over bunnies, robots, squirrels, etc. 
+
+We also hope to be able to include more physics. Specifically, when the ball rolls over a patch of sand, perhaps some of the sand can fly outward in response. Similarly, when we roll over a bunny, perhaps there is some visible impact on the surrounding terrain that we could simulate. 
+
+\vspace{1in}
+Thanks for all the help this semester - we've had lots of fun and learned a lot!
+
+
 
 \begin{thebibliography}{999}
 

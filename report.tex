@@ -17,6 +17,13 @@
 \caption{#2}
 \label{#1}
 \end{center}
+\end{figure}}                    
+\newcommand{\sfig}[3]{\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=#1]{figures/#2}
+\caption{#3}
+\label{#2}
+\end{center}
 \end{figure}}
                         
 \begin{document}
@@ -31,15 +38,13 @@
 \newpage
 \tableofcontents
 
-% TODO:
-% screenshots
-% references
-\fig{screenshotpic}{Roll-A-Bunny in action: white ball utilized by player to navigate a bumpy terrain to hit a dancing bunny or golden collectible for points. We made the borders transparent for better user play and to protect the ball from falling out of bounds. The score and count of remaining bunnies are upper left. The instructions are middle top. The remaining time (start with 60 seconds) is at the upper right. }
-
 \newpage
  
 \section{Roll-A-Bunny Overview}
   For our CS 175 project, we decided to create a game called \textbf{Roll-A-Bunny} by building on what we've learned in class, and extending it to create this cross-platform game in Unity.
+
+  \fig{screenshotpic}{Roll-A-Bunny in action. Our player (the white sphere) navigates a bumpy terrain to hit a dancing bunny or rotating yellow collectible cube for points. The walls of the playfield protect the sphere from falling out of bounds, and the transparency of the walls allows for a better user experience. The user's score and count of remaining bunnies are at the upper left hand corner of the screen; the instructions (and later, game results) are at the top center of the screen; and the remaining time (starting with 60 seconds) is at the upper right hand corner of the screen.}
+
 \subsection{Goal}
   Roll-A-Bunny is a combination of two classics: Whack-A-Mole + Roll-A-Ball, as well as our love for bunnies in CS 175. The goal of Roll-A-Bunny is to roll your player (a sphere) over all nine bunnies while collecting as many yellow collectibles (twelve in total) as possible in under 60 seconds. 
   You win if you are able to roll over all nine bunnies and your score will be the number of collectibles you were able to collect in the process. If you are unable to roll over all nine bunnies within 60 seconds, you will unfortunately lose the game.
@@ -67,6 +72,8 @@
 
   The nine bunnies we have in the game are randomly chosen to pop up in their designated cells in 1.5 second intervals. These random bunny appearances are controlled within \verb+GameController.cs+, where we select a bunny to appear by randomly selecting a bunny from our array of bunnies. In \verb+GameController.cs+, we have an array of bunnies holding bunny game objects.
 
+  \sfig{2in}{bunny}{An image of our bunny mesh.}
+
 \subsubsection{Random Bunny Appearances}
   In each random appearance of a bunny, in order to update the position of the bunny, we linearly interpolate between its local position and its target position depending on the circumstance. Unity has a \verb+Vector3.Lerp(start position, target position, speed)+ function that allows us to accomplish this more easily and efficiently. Similar to the lerp function we introduced in class, this means we pass in transform vectors such as the local position of the rabbit and the target position of the rabbit. This lerp functionality allows us to smoothly move the bunnies up and down. 
 
@@ -78,11 +85,17 @@
 \subsection{Terrain}
   We created a 3D terrain to increase the difficulty of the game and more closely simulate reality. The 3D terrain has a terrain collider so the player would have to move up and down small bumps and hills in order to navigate the game field. We were able to accomplish this by using the terrain game object and its brush to raise and lower terrains in a natural fashion.
 
+  \sfig{4in}{terrain}{An image of a subsection of our terrain.}
+
 \subsection{Walls}
   We created 4 identical walls to enclose the bunnies and our player, so that the player does not roll off the screen. These walls are duplicates of each other and their transforms were calculated and updated based on the size of our square-shaped ground.
 
+  \sfig{5in}{walls}{An image of our 4 transparent walls that enclose our play field.}
+
 \subsection{Collectibles}
   The twelve yellow collectibles are yellow cubes that are all based on the same prefab. All cubes are colored yellow to draw attention to themselves as collectibles that will gain the user points. Additionally, each collectible rotates in place around the surface of the play area.
+
+  \sfig{2in}{collectible}{An image of our rotating yellow collectible.}
 
 \subsubsection{Rotating Collectibles}
   Each of the collectibles rotate in place. We were able to achieve this rotation effect by rotating the transform of each of our yellow collectibles in the \verb+Update()+ function so that the transform of each of our collectibles is updated in each frame. In our \verb+Update()+ function, we apply a rotation by a certain vector to the transforms of our collectibles, smoothed by a time delta (so that the rotations are frame rate independent and not extremely fast and jerky as they would be without the smoothing).
@@ -121,6 +134,9 @@ We have 4 different texts in our game:
   Our goal is to have the camera and player have this same offset at every frame throughout the duration of the game, so we update the camera's transform at every frame in the function \verb+LateUpdate()+ so that it is located at the player's position plus the offset. 
   Updating the camera's transform in \verb+LateUpdate()+ rather than \verb+Update()+ allows us to ensure that we will update our camera's position only after all items have been processed in \verb+Update+, more specifically ensuring that the position of the camera is updated only after the player's position has been updated in that particular frame.
   This process allows the camera to maintain the same relative position to our player throughout the game, achieving the effect of having our camera follow our player, allowing the user to focus on his/her player's behavior.
+
+  \sfig{4.5in}{camera}{An image of our camera's position relative to the player's position. This offset is maintained throughout our game.}
+
   
 
 \section{Design}
@@ -148,6 +164,9 @@ We have 4 different texts in our game:
   We downloaded an animated bunny asset as part of our game for users to try to roll over all nine of our bunnies. We also create prefabs using our assets to allow for more efficient updates of the same game objects. For example, a bunny has its own prefab so when one bunny is updated, all the other bunnies are also updated. 
  
   Throughout the game creation process, we stored different scenes to work with for code management purposes. We also use terrain and background assets to help us build and simulate a forest environment. 
+
+  \sfig{2in}{bunny-asset}{An example of our bunny asset, which we use to generate our nine bunnies in Roll-A-Bunny.}
+
 
 
 \section{Challenges}
